@@ -148,6 +148,19 @@ class Parser:
         output_lines: Optional[str] = None,
         indent_level: int = 0,
     ) -> Sequence[str]:
+        
+        # WORKAROUND until tuples are supported
+        if isinstance(obj, list):
+            for i,item in enumerate(obj):
+                c_name = f"{name}_{i}"
+                self._parse_object(
+                    item, 
+                    c_name, 
+                    name_monospace, 
+                    output_lines,
+                    indent_level)
+            return output_lines
+        
         """Parse JSON object and its items, definitions, and properties recursively."""
         if not isinstance(obj, dict):
             raise TypeError(
