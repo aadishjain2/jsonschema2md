@@ -231,7 +231,7 @@ class Parser:
 
         # Add title and description
         if "title" in schema_object:
-            output_lines.append(f"# {schema_object['title']}\n\n")
+            output_lines.append(f"## {schema_object['title']}\n\n")
         else:
             output_lines.append("# JSON Schema\n\n")
         if "description" in schema_object:
@@ -239,7 +239,7 @@ class Parser:
 
         # Add items
         if "items" in schema_object:
-            output_lines.append(f"## Items\n\n")
+            output_lines.append(f"### Items\n\n")
             output_lines.extend(self._parse_object(
                 schema_object["items"],
                 "Items",
@@ -248,7 +248,7 @@ class Parser:
 
         # Add additional properties
         if "additionalProperties" in schema_object and isinstance(schema_object["additionalProperties"], dict):
-            output_lines.append(f"## Additional Properties\n\n")
+            output_lines.append(f"### Additional Properties\n\n")
             output_lines.extend(self._parse_object(
                 schema_object["additionalProperties"],
                 "Additional Properties",
@@ -257,20 +257,20 @@ class Parser:
 
         # Add pattern properties
         if "patternProperties" in schema_object:
-            output_lines.append(f"## Pattern Properties\n\n")
+            output_lines.append(f"### Pattern Properties\n\n")
             for obj_name, obj in schema_object["patternProperties"].items():
                 output_lines.extend(self._parse_object(obj, obj_name))
 
         # Add properties and definitions
         for name in ["properties", "definitions"]:
             if name in schema_object:
-                output_lines.append(f"## {name.capitalize()}\n\n")
+                output_lines.append(f"### {name.capitalize()}\n\n")
                 for obj_name, obj in schema_object[name].items():
                     output_lines.extend(self._parse_object(obj, obj_name))
 
         # Add examples
         if "examples" in schema_object and self.show_examples in ["all", "object"]:
-            output_lines.append("## Examples\n\n")
+            output_lines.append("### Examples\n\n")
             output_lines.extend(self._construct_examples(
                 schema_object, indent_level=0, add_header=False
             ))
