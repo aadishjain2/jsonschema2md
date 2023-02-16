@@ -233,9 +233,9 @@ class Parser:
         if "title" in schema_object:
             output_lines.append(f"## {schema_object['title']}\n\n")
         else:
-            output_lines.append("# JSON Schema\n\n")
+            output_lines.append("## JSON Schema\n\n")
         if "description" in schema_object:
-            output_lines.append(f"*{schema_object['description']}*\n\n")
+            output_lines.append(f"{schema_object['description']}\n\n")
 
         # Add items
         if "items" in schema_object:
